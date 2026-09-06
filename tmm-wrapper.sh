@@ -14,6 +14,7 @@ cd "$DATA_DIR"
 exec /app/jre/bin/java \
   -cp "$CP" \
   -Dtmm.contentfolder="$DATA_DIR" \
+  -Djava.awt.headless=false \
   -Dadd-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED \
   --enable-native-access=ALL-UNNAMED \
   -Xms64m \

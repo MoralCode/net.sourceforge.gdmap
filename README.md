@@ -39,13 +39,13 @@ This repository contains the following files:
 
 - **`Makefile`**: The main script that automates the entire download, build, and
 installation process.
-- **`com.cursor.App.yml`**: The Flatpak manifest. This is the core blueprint
+- **`org.tinymediamanager.TinyMediaManager.yml`**: The Flatpak manifest. This is the core blueprint
 that tells `flatpak-builder` how to construct the application, including its
 dependencies, sources, and sandbox permissions.
-- **`com.cursor.App.appdata.xml`**: AppStream metadata for the application. This
+- **`org.tinymediamanager.TinyMediaManager.appdata.xml`**: AppStream metadata for the application. This
 file provides the information (name, description, version history) that software
 centers like GNOME Software and KDE Discover use to display the application.
-- **`com.cursor.App.desktop`**: The `.desktop` file that allows the application
+- **`org.tinymediamanager.TinyMediaManager.desktop`**: The `.desktop` file that allows the application
 to be launched from your desktop environment's application menu.
 
 ## How to Build

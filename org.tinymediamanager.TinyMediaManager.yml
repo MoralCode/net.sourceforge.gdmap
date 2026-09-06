@@ -1,84 +1,35 @@
 app-id: org.tinymediamanager.TinyMediaManager
-runtime: org.freedesktop.Sdk
-runtime-version: "24.08"
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
-command: zypak-run.sh
-base: org.electronjs.Electron2.BaseApp
-base-version: "24.08"
+command: tinyMediaManager
+
 finish-args:
-  - --share=ipc
-  - --socket=wayland
-  - --socket=x11
-  # GPU acceleration
-  - --device=dri
-  # Audio
-  - --socket=pulseaudio
-  - --socket=ssh-auth
-  # Network access - Cursor needs this for its AI features
   - --share=network
-  - --persist=.vscode-oss
-  - --allow=devel
-  - --talk-name=org.freedesktop.secrets
-  - --talk-name=org.kde.kwalletd5
-  - --talk-name=org.freedesktop.Flatpak
-  - --env=XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons
-  - --filesystem=xdg-run/gnupg:ro
-  - --filesystem=xdg-config/kdeglobals:ro
-  - --talk-name=com.canonical.AppMenu.Registrar
-  - --system-talk-name=org.freedesktop.login1
-  # Unsure
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --device=dri
+  - --filesystem=home # Necessary to manage media files
   - --talk-name=org.freedesktop.Notifications
 
 modules:
-  # Module for the Cursor application itself
-  - shared-modules/libcanberra/libcanberra.json
-  - name: squashfs-tools
-    cleanup: [ '/bin/sqsh*', '/include', '/lib', '/share' ]
+  - name: tinyMediaManager
+    buildsystem: simple
+    build-commands:
+      - cp -r * /app/
+      - chmod +x /app/tinyMediaManager
+      # Create a symlink to the binary in /app/bin so it's in the PATH
+      - mkdir -p /app/bin
+      - ln -s /app/tinyMediaManager /app/bin/tinyMediaManager
     sources:
       - type: archive
-        url: https://github.com/plougher/squashfs-tools/archive/refs/tags/4.6.1.tar.gz
-        sha256: 9c4974e07c61547dae14af4ed1f358b7d04618ae194e54d6be72ee126f0d2f53
-    buildsystem: simple
-    build-commands:
-      # Build the tools
-      - make -C squashfs-tools
-      # Manually install ONLY the binaries to avoid the /usr/local error
-      - install -D squashfs-tools/unsquashfs /app/bin/unsquashfs
-      - install -D squashfs-tools/mksquashfs /app/bin/mksquashfs
-  - name: cursor
-    buildsystem: simple
-    build-commands:
-      - |
-        OFFSET=$(grep -aboh "hsqs" Cursor.AppImage | tail -n 1 | cut -d: -f1)
-        echo $OFFSET
-        unsquashfs -f -d squashfs-root -o $OFFSET Cursor.AppImage
-      # Copy the extracted AppImage contents into the /app directory
-      - cp -r squashfs-root/usr /app/usr
-      # Install metadata files
-      - install -Dm644 org.tinymediamanager.TinyMediaManager.desktop /app/share/applications/org.tinymediamanager.TinyMediaManager.desktop
-      - install -Dm644 org.tinymediamanager.TinyMediaManager.appdata.xml /app/share/metainfo/org.tinymediamanager.TinyMediaManager.appdata.xml
-      - mkdir -p /app/share/icons/hicolor/256x256/apps
-      - ffmpeg -width 256 -i squashfs-root/usr/share/pixmaps/co.anysphere.cursor.png -vf scale=256:-1 -frames:v 1 /app/share/icons/hicolor/256x256/apps/org.tinymediamanager.TinyMediaManager.png
-      - install -Dm755 run.sh /app/bin/zypak-run.sh
-      - rm -rf squashfs-root
-    sources:
-      - type: file
-        dest-filename: Cursor.AppImage
-        url: https://api2.cursor.sh/updates/download/golden/linux-x64/cursor/2.6
-        sha256: ae63d7069207229f3bc85d0f0c986a220bed5ce5584f42571d3eba6329f08208
-        x-checker-data:
-          type: rotating-url
-          url: https://api2.cursor.sh/updates/download/golden/linux-x64/cursor/2.3
-          dest-filename: Cursor.AppImage
-      # - type: file
-      #   url: https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
-      #   sha256: a6d71e2b6cd66f8e8d16c37ad164658985e0cf5fcaa950c90a482890cb9d13e0
-      #   dest-filename: Appimagetool.AppImage
-
-      # These are the metadata files from our project directory
-      - type: file
-        path: org.tinymediamanager.TinyMediaManager.desktop
-      - type: file
-        path: org.tinymediamanager.TinyMediaManager.appdata.xml
-      - type: file
-        path: run.sh
+        dest-filename: tmm.tar.xz
+        only-arches: [x86_64]
+        url: https://release.tinymediamanager.org/v5/dist/tinyMediaManager-5.3.2-linux-amd64.tar.xz
+        sha256: 3386cf290f08dbf3c7794e61c63a1b77937ff08c85961cb0ebe0a5650c9bff8a
+      - type: archive
+        dest-filename: tmm.tar.xz
+        only-arches: [aarch64]
+        url: https://release.tinymediamanager.org/v5/dist/tinyMediaManager-5.3.2-linux-arm64.tar.xz
+        sha256: e05c228d0a0ce1514b20d50fb81cb74b46d260297beac5953408579257d23569

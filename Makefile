@@ -32,30 +32,11 @@ install: build
 
 # Uninstalls the application.
 uninstall:
-	@echo "--> Uninstalling Cursor..."
+	@echo "--> Uninstalling $(APP_ID)..."
 	flatpak uninstall $(APP_ID)
-
-# --- Helper Targets ---
-
-# This target handles downloading and extracting the AppImage.
-# It's triggered by the 'build' target.
-
-Cursor-$(VERSION)-$(ARCH).AppImage:
-	@echo "--> Preparing AppImage..."
-	@echo "    Downloading from: $(CURSOR_URL)"
-	wget -O $(APPIMAGE_FILE) "$(CURSOR_URL)"
-	@echo "    Making executable..."
-	chmod +x $(APPIMAGE_FILE)
-
-$(SQUASHFS_ROOT): Cursor-$(VERSION)-$(ARCH).AppImage
-	@echo "    Extracting AppImage..."
-	./$(APPIMAGE_FILE) --appimage-extract
-	@echo "    Extraction complete. Extracted to '$(SQUASHFS_ROOT)'."
 
 # Cleans up all generated files and directories.
 clean:
 	@echo "--> Cleaning up..."
 	rm -rf $(BUILD_DIR)
-	rm -rf $(SQUASHFS_ROOT)
-	rm -f *.AppImage
 	@echo "--> Cleanup complete."

@@ -2,7 +2,7 @@ app-id: org.tinymediamanager.TinyMediaManager
 runtime: org.freedesktop.Platform
 runtime-version: '26.08'
 sdk: org.freedesktop.Sdk
-command: tinyMediaManager
+command: tmm-wrapper.sh
 
 finish-args:
   - --share=network
@@ -21,6 +21,8 @@ modules:
       # Create a symlink to the binary in /app/bin so it's in the PATH
       - mkdir -p /app/bin
       - ln -s /app/tinyMediaManager /app/bin/tinyMediaManager
+
+      - install -Dm755 tmm-wrapper.sh /app/bin/tmm-wrapper.sh
 
       # 2. Install Desktop File
       - install -Dm644 org.tinymediamanager.TinyMediaManager.desktop /app/share/applications/org.tinymediamanager.TinyMediaManager.desktop
@@ -43,6 +45,8 @@ modules:
         url: https://release.tinymediamanager.org/v5/dist/tinyMediaManager-5.3.2-linux-arm64.tar.xz
         sha256: e05c228d0a0ce1514b20d50fb81cb74b46d260297beac5953408579257d23569
        # Include the local files in the build source
+      - type: file
+        path: tmm-wrapper.sh
       - type: file
         path: org.tinymediamanager.TinyMediaManager.desktop
       - type: file

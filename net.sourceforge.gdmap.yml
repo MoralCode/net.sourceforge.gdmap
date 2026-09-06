@@ -19,8 +19,13 @@ modules:
     buildsystem: autotools
     config-opts:
       - "LIBS=-lm"
-    # post-install:
+    post-install:
+      - mv ${FLATPAK_DEST}/share/applications/gdmap.desktop ${FLATPAK_DEST}/share/applications/net.sourceforge.gdmap.desktop
+      - mkdir -p ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps
+      # - ffmpeg -y -i ${FLATPAK_DEST}/share/pixmaps/gdmap_icon.png -vf "scale=128:128" ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/net.sourceforge.gdmap.png
+      - mv ${FLATPAK_DEST}/share/pixmaps/gdmap_icon.png ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/net.sourceforge.gdmap.png
 
+      - mv ${FLATPAK_DEST}/share/man/man1/gdmap.1 ${FLATPAK_DEST}/share/man/man1/net.sourceforge.gdmap.1
       # # 2. Install Desktop File
       # - install -Dm644 net.sourceforge.gdmap.desktop /app/share/applications/net.sourceforge.gdmap.desktop
       
@@ -40,3 +45,7 @@ modules:
         commands:
           - sed -i 's/GTK_WIDGET_SET_FLAGS(\(.*\), GTK_CAN_FOCUS);/gtk_widget_set_can_focus(\1, TRUE);/g' src/gui_support.c
           - sed -i 's/GTK_WIDGET_SET_FLAGS/gtk_widget_set_flags/g' src/*.c || true
+          # Replace macro checking sensitivity with gtk_widget_is_sensitive
+          - sed -i 's/GTK_WIDGET_SENSITIVE(\([^)]*\))/gtk_widget_is_sensitive(\1)/g' src/gui_support.c
+          # Catch any other instances across all C source files in src/
+          - sed -i 's/GTK_WIDGET_SENSITIVE(\([^)]*\))/gtk_widget_is_sensitive(\1)/g' src/*.c || true

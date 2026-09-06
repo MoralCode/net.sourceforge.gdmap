@@ -6,11 +6,7 @@ MANIFEST := $(APP_ID).yml
 APPDATA := $(APP_ID).metainfo.xml
 DESKTOP := $(APP_ID).desktop
 BUILD_DIR := build-dir
-SQUASHFS_ROOT := squashfs-root
 ARCH ?= x86_64
-
-
-APPIMAGE_FILE = $(notdir $(CURSOR_URL))
 
 .PHONY: all build install run clean uninstall
 

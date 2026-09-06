@@ -3,7 +3,7 @@
 # --- Variables ---
 APP_ID := net.sourceforge.gdmap
 MANIFEST := $(APP_ID).yml
-APPDATA := $(APP_ID).appdata.xml
+APPDATA := $(APP_ID).metainfo.xml
 DESKTOP := $(APP_ID).desktop
 BUILD_DIR := build-dir
 SQUASHFS_ROOT := squashfs-root

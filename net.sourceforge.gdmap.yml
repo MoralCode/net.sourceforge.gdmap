@@ -12,44 +12,23 @@ finish-args:
   - --talk-name=org.freedesktop.Notifications
 
 modules:
-  - name: tinyMediaManager
-    buildsystem: simple
-    build-commands:
-      - cp -r * /app/
-      - chmod +x /app/tinyMediaManager
-      # Create a symlink to the binary in /app/bin so it's in the PATH
-      - mkdir -p /app/bin
-      - ln -s /app/tinyMediaManager /app/bin/tinyMediaManager
+  - shared-modules/gtk2/gtk2.json
+  - name: gdmap
+    buildsystem: autotools
+    # post-install:
 
-      # Ensure the bundled JRE is executable
-      - chmod +x /app/jre/bin/java
-
-      - install -Dm755 tmm-wrapper.sh /app/bin/tmm-wrapper.sh
-
-      # 2. Install Desktop File
-      - install -Dm644 net.sourceforge.gdmap.desktop /app/share/applications/net.sourceforge.gdmap.desktop
+      # # 2. Install Desktop File
+      # - install -Dm644 net.sourceforge.gdmap.desktop /app/share/applications/net.sourceforge.gdmap.desktop
       
-      # 3. Install Metadata
-      - install -Dm644 net.sourceforge.gdmap.metainfo.xml /app/share/metainfo/net.sourceforge.gdmap.metainfo.xml
+      # # 3. Install Metadata
+      # - install -Dm644 net.sourceforge.gdmap.metainfo.xml /app/share/metainfo/net.sourceforge.gdmap.metainfo.xml
       
-      # 4. Install Icon (Assuming you have a file named tmm.png)
-      - install -Dm644 tmm.png /app/share/icons/hicolor/256x256/apps/net.sourceforge.gdmap.png
+      # # 4. Install Icon (Assuming you have a file named tmm.png)
+      # - install -Dm644 tmm.png /app/share/icons/hicolor/256x256/apps/net.sourceforge.gdmap.png
       
     sources:
       - type: archive
-        dest-filename: tmm.tar.xz
+        dest-filename: gdmap.tar.gz
         only-arches: [x86_64]
-        url: https://release.tinymediamanager.org/v5/dist/tinyMediaManager-5.3.2-linux-amd64.tar.xz
-        sha256: 3386cf290f08dbf3c7794e61c63a1b77937ff08c85961cb0ebe0a5650c9bff8a
-      - type: archive
-        dest-filename: tmm.tar.xz
-        only-arches: [aarch64]
-        url: https://release.tinymediamanager.org/v5/dist/tinyMediaManager-5.3.2-linux-arm64.tar.xz
-        sha256: e05c228d0a0ce1514b20d50fb81cb74b46d260297beac5953408579257d23569
-       # Include the local files in the build source
-      - type: file
-        path: tmm-wrapper.sh
-      - type: file
-        path: net.sourceforge.gdmap.desktop
-      - type: file
-        path: net.sourceforge.gdmap.metainfo.xml
+        url: https://sourceforge.net/projects/gdmap/files/latest/download
+        sha256: a200c98004b349443f853bf611e49941403fce46f2335850913f85c710a2285b

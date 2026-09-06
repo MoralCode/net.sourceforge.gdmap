@@ -5,10 +5,8 @@ sdk: org.gnome.Sdk
 command: gdmap
 finish-args:
   # X11 for the GUI
-  - --socket-x11
-  - --socket-fallback-x11
-  # Wayland for modern desktops
-  - --socket-wayland
+  - --socket=x11
+  - --socket=fallback-x11
   # File system access to scan disks (the purpose of the app)
   - --filesystem=host
   # Access to icons/themes

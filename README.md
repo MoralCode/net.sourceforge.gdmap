@@ -39,13 +39,13 @@ This repository contains the following files:
 
 - **`Makefile`**: The main script that automates the entire download, build, and
 installation process.
-- **`org.tinymediamanager.TinyMediaManager.yml`**: The Flatpak manifest. This is the core blueprint
+- **`net.sourceforge.gdmap.yml`**: The Flatpak manifest. This is the core blueprint
 that tells `flatpak-builder` how to construct the application, including its
 dependencies, sources, and sandbox permissions.
-- **`org.tinymediamanager.TinyMediaManager.appdata.xml`**: AppStream metadata for the application. This
+- **`net.sourceforge.gdmap.appdata.xml`**: AppStream metadata for the application. This
 file provides the information (name, description, version history) that software
 centers like GNOME Software and KDE Discover use to display the application.
-- **`org.tinymediamanager.TinyMediaManager.desktop`**: The `.desktop` file that allows the application
+- **`net.sourceforge.gdmap.desktop`**: The `.desktop` file that allows the application
 to be launched from your desktop environment's application menu.
 
 ## How to Build
@@ -86,7 +86,7 @@ Once the build is complete, you can install it for your user with:
 Once installed, you can normally run your application with:
 
    ```bash
-   flatpak run org.tinymediamanager.TinyMediaManager
+   flatpak run net.sourceforge.gdmap
    ```
 
 ## Makefile Targets

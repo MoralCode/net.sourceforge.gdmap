@@ -30,4 +30,4 @@ exec /app/jre/bin/java \
   -Dawt.useSystemAAFontSettings=on \
   -Dswing.aatext=true \
   -Dtmm.consoleloglevel=DEBUG \
-  org.tinymediamanager.TinyMediaManager "$@"
+  net.sourceforge.gdmap "$@"

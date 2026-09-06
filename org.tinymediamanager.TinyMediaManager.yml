@@ -1,4 +1,4 @@
-app-id: org.tinymediamanager.TinyMediaManager
+app-id: net.sourceforge.gdmap
 runtime: org.freedesktop.Platform
 runtime-version: '26.08'
 sdk: org.freedesktop.Sdk
@@ -27,13 +27,13 @@ modules:
       - install -Dm755 tmm-wrapper.sh /app/bin/tmm-wrapper.sh
 
       # 2. Install Desktop File
-      - install -Dm644 org.tinymediamanager.TinyMediaManager.desktop /app/share/applications/org.tinymediamanager.TinyMediaManager.desktop
+      - install -Dm644 net.sourceforge.gdmap.desktop /app/share/applications/net.sourceforge.gdmap.desktop
       
       # 3. Install Metadata
-      - install -Dm644 org.tinymediamanager.TinyMediaManager.metainfo.xml /app/share/metainfo/org.tinymediamanager.TinyMediaManager.metainfo.xml
+      - install -Dm644 net.sourceforge.gdmap.metainfo.xml /app/share/metainfo/net.sourceforge.gdmap.metainfo.xml
       
       # 4. Install Icon (Assuming you have a file named tmm.png)
-      - install -Dm644 tmm.png /app/share/icons/hicolor/256x256/apps/org.tinymediamanager.TinyMediaManager.png
+      - install -Dm644 tmm.png /app/share/icons/hicolor/256x256/apps/net.sourceforge.gdmap.png
       
     sources:
       - type: archive
@@ -50,6 +50,6 @@ modules:
       - type: file
         path: tmm-wrapper.sh
       - type: file
-        path: org.tinymediamanager.TinyMediaManager.desktop
+        path: net.sourceforge.gdmap.desktop
       - type: file
-        path: org.tinymediamanager.TinyMediaManager.metainfo.xml
+        path: net.sourceforge.gdmap.metainfo.xml

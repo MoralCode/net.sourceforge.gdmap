@@ -36,3 +36,7 @@ modules:
         only-arches: [x86_64]
         url: https://sourceforge.net/projects/gdmap/files/latest/download
         sha256: a200c98004b349443f853bf611e49941403fce46f2335850913f85c710a2285b
+      - type: shell
+        commands:
+          - sed -i 's/GTK_WIDGET_SET_FLAGS(\(.*\), GTK_CAN_FOCUS);/gtk_widget_set_can_focus(\1, TRUE);/g' src/gui_support.c
+          - sed -i 's/GTK_WIDGET_SET_FLAGS/gtk_widget_set_flags/g' src/*.c || true

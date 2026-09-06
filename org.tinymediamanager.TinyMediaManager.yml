@@ -22,6 +22,16 @@ modules:
       # Create a symlink to the binary in /app/bin so it's in the PATH
       - mkdir -p /app/bin
       - ln -s /app/tinyMediaManager /app/bin/tinyMediaManager
+
+      # 2. Install Desktop File
+      - install -Dm644 org.tinymediamanager.TinyMediaManager.desktop /app/share/applications/org.tinymediamanager.TinyMediaManager.desktop
+      
+      # 3. Install Metadata
+      - install -Dm644 org.tinymediamanager.TinyMediaManager.metainfo.xml /app/share/metainfo/org.tinymediamanager.TinyMediaManager.metainfo.xml
+      
+      # 4. Install Icon (Assuming you have a file named tmm.png)
+      - install -Dm644 tmm.png /app/share/icons/hicolor/256x256/apps/org.tinymediamanager.TinyMediaManager.png
+      
     sources:
       - type: archive
         dest-filename: tmm.tar.xz
@@ -33,3 +43,8 @@ modules:
         only-arches: [aarch64]
         url: https://release.tinymediamanager.org/v5/dist/tinyMediaManager-5.3.2-linux-arm64.tar.xz
         sha256: e05c228d0a0ce1514b20d50fb81cb74b46d260297beac5953408579257d23569
+       # Include the local files in the build source
+      - type: file
+        path: org.tinymediamanager.TinyMediaManager.desktop
+      - type: file
+        path: org.tinymediamanager.TinyMediaManager.metainfo.xml

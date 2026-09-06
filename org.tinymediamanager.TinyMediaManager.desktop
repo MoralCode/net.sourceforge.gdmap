@@ -1,9 +1,12 @@
-# org.tinymediamanager.TinyMediaManager
 [Desktop Entry]
-Name=Cursor
-Exec=zypak-run.sh
-Icon=org.tinymediamanager.TinyMediaManager
+Version=1.0
 Type=Application
-Categories=Development;IDE;
-StartupNotify=true
-StartupWMClass=cursor
+Name=Tiny Media Manager
+GenericName=Media Manager
+Comment=A multi-purpose media manager for movies and TV shows
+Exec=tinyMediaManager
+Icon=org.tinymediamanager.TinyMediaManager
+Terminal=false
+Categories=Video;AudioVideo;Recorder;
+Keywords=Movies;TV;Shows;Metadata;Scraper;
+StartupWMClass=tinyMediaManager

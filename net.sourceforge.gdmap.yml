@@ -1,15 +1,19 @@
 app-id: net.sourceforge.gdmap
-runtime: org.freedesktop.Platform
-runtime-version: '26.08'
-sdk: org.freedesktop.Sdk
-command: tmm-wrapper.sh
-
+runtime: org.gnome.Platform
+runtime-version: '44' # You can adjust this based on your SDK preference
+sdk: org.gnome.Sdk
+command: gdmap
 finish-args:
-  - --share=network
-  - --share=ipc
-  - --socket=x11
+  # X11 for the GUI
+  - --socket-x11
+  - --socket-fallback-x11
+  # Wayland for modern desktops
+  - --socket-wayland
+  # File system access to scan disks (the purpose of the app)
+  - --filesystem=host
+  # Access to icons/themes
   - --device=dri
-  - --talk-name=org.freedesktop.Notifications
+  - --share=ipc
 
 modules:
   - shared-modules/gtk2/gtk2.json

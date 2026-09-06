@@ -22,6 +22,9 @@ modules:
       - mkdir -p /app/bin
       - ln -s /app/tinyMediaManager /app/bin/tinyMediaManager
 
+      # Ensure the bundled JRE is executable
+      - chmod +x /app/jre/bin/java
+      
       - install -Dm755 tmm-wrapper.sh /app/bin/tmm-wrapper.sh
 
       # 2. Install Desktop File

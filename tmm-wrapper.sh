@@ -1,13 +1,32 @@
 #!/bin/sh
 
-# The directory where Flatpak allows writing data
+# 1. Define the writable data path
 DATA_DIR="${XDG_DATA_HOME}/tinyMediaManager"
+mkdir -p "$DATA_DIR"
 
-# Create the directory if it doesn't exist
-if [ ! -d "$DATA_DIR" ]; then
-    mkdir -p "$DATA_DIR"
-fi
+# 2. Set up the Classpath (matching the YAML)
+# We include /app/tmm.jar and all jars in /app/lib and /app/addons
+CP="/app/tmm.jar:/app/lib/*:/app/addons/*"
 
-# Run tinyMediaManager and tell it to use the writable directory
-# -Duser.home and -Dtinymediamanager.data help redirect settings
-exec /app/tinyMediaManager -Dtinymediamanager.data="$DATA_DIR"  -Dtmm.consoleloglevel=INFO "$@"
+# 3. Launch Java directly
+# We use the JRE bundled in the archive (located at /app/jre/bin/java)
+cd "$DATA_DIR"
+exec /app/jre/bin/java \
+  -cp "$CP" \
+  -Dtmm.contentfolder="$DATA_DIR" \
+  -Dadd-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED \
+  --enable-native-access=ALL-UNNAMED \
+  -Xms64m \
+  -Xmx512m \
+  -Xss512k \
+  -XX:+IgnoreUnrecognizedVMOptions \
+  -XX:+UseStringDeduplication \
+  -Dsun.java2d.renderer=sun.java2d.marlin.MarlinRenderingEngine \
+  -Djava.net.preferIPv4Stack=true \
+  -Dfile.encoding=UTF-8 \
+  -Dsun.jnu.encoding=UTF-8 \
+  -Djna.nosys=true \
+  -Dawt.useSystemAAFontSettings=on \
+  -Dswing.aatext=true \
+  -Dtmm.consoleloglevel=DEBUG \
+  org.tinymediamanager.TinyMediaManager "$@"

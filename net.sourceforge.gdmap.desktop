@@ -1,12 +1,11 @@
+
 [Desktop Entry]
-Version=1.0
-Type=Application
-Name=Tiny Media Manager
-GenericName=Media Manager
-Comment=A multi-purpose media manager for movies and TV shows
-Exec=tinyMediaManager
+Version=1.1
+Name=Graphical Disk Map
+Comment=Display disk space using tree maps
+Exec=gdmap
 Icon=net.sourceforge.gdmap
 Terminal=false
-Categories=Video;AudioVideo;Recorder;
-Keywords=Movies;TV;Shows;Metadata;Scraper;
-StartupWMClass=tinyMediaManager
+Type=Application
+Categories=Filesystem;GTK;System
+Keywords=directory;folder;gdmap;usage
